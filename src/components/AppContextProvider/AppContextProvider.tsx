@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode;
 }
 function AppContextProvider({ children } : Props) {
-  const [appData, setData] = useState<AppDataModel>(JSON.parse(localStorage.getItem("artTimeTableData") ?? JSON.parse('{"students": [], "projects": [], "classRooms": []}')));
+  const [appData, setData] = useState<AppDataModel>(JSON.parse(localStorage.getItem("artTimeTableData") ?? '{"students": [], "projects": [], "classRooms": []}'));
 
   const updateData = (newData: AppDataModel) => {
     console.log('update data', newData);

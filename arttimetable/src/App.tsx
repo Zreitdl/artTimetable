@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import routes from "./config/routes";
+
+import "./global.module.scss";
+// import { getCurrentUserData } from "./utils/firebaseFunctions";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <div>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <Routes>
+          {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <route.component />
+                }
+              />
+            ))}
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </LocalizationProvider>
   );
 }
 

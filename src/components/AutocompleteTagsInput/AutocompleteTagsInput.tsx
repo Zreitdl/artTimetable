@@ -52,7 +52,7 @@ const AutocompleteTagsInput = memo((props: Props) => {
               sx={{ margin: "0 20px 5px 0" }}
             >
               <Autocomplete
-                sx={{ width: "300px" }}
+                sx={{ width: 300 }}
                 onChange={(e, value) => updateTag(value as string, index)}
                 options={options}
                 value={value || options[0]}

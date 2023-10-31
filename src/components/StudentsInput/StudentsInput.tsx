@@ -2,7 +2,9 @@ import { memo, useEffect, useState } from "react";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
+import { uid } from "uid";
 
+import { TIME_RANGE } from "../../config/constants";
 import { Student } from "../../utils/appModels";
 import AutocompleteTagsInput from "../AutocompleteTagsInput/AutocompleteTagsInput";
 
@@ -15,11 +17,12 @@ interface Props {
 }
 
 const StudentsInput = memo((props: Props) => {
-  const { inputHead, updateData, buttonText, projectsOptions, initialValues } = props;
+  const { inputHead, updateData, buttonText, projectsOptions, initialValues } =
+    props;
   const [students, setStudents] = useState<Student[]>(initialValues);
 
   useEffect(() => {
-    console.log('update students');
+    console.log("update students");
     updateData(students);
   }, [students]);
 
@@ -37,7 +40,15 @@ const StudentsInput = memo((props: Props) => {
 
   const addTag = () => {
     setStudents((tags) => {
-      return [{ name: "", projects: []}, ...tags];
+      return [
+        ...tags,
+        {
+          name: "",
+          projects: [],
+          availableHours: TIME_RANGE.toString(),
+          id: uid(),
+        },
+      ];
     });
   };
 
@@ -48,7 +59,6 @@ const StudentsInput = memo((props: Props) => {
   };
 
   const updateProjectsAtStudent = (index: number, projects: string[]) => {
-    console.log('updateProjectsAtStudent');
     const newTags = students.map((student, i) => {
       if (i === index) {
         student.projects = projects;
@@ -64,33 +74,41 @@ const StudentsInput = memo((props: Props) => {
     // });
   };
 
+  const updateHoursAtStudent = (index: number, value: string) => {
+    const newTags = students.map((student, i) => {
+      if (i === index) {
+        student.availableHours = value;
+        return student;
+      } else {
+        return student;
+      }
+    });
+    setStudents(newTags);
+  };
+
   return (
     <>
       {students.map((student: Student, index: number) => {
         return (
           <Box
             sx={{
-              borderBottom: 1,
-              marginBottom: "20px",
-              paddingBottom: "20px",
+              padding: 2,
+              my: 2,
+              "&:nth-child(2n)": { backgroundColor: "#e1f5fe52", border: '1px solid #81d4fa', borderRadius: 2 },
             }}
-            key={inputHead + index}
+            key={"student__" + student.id}
           >
-            <Box
-              key={"student__" + inputHead + index}
-              display={"flex"}
-              alignItems={"center"}
-            >
+            <Box display={"flex"} alignItems={"center"}>
               <TextField
-                margin="normal"
                 fullWidth
+                sx={{mb: 2}}
                 id={inputHead + index}
                 label={inputHead}
                 value={student.name}
                 onChange={(e) => updateTag(e.target.value as string, index)}
               />
               <IconButton
-                style={{ marginLeft: "10px" }}
+                style={{ marginLeft: 1 }}
                 aria-label="delete"
                 onClick={() => {
                   removeTag(index);
@@ -115,6 +133,24 @@ const StudentsInput = memo((props: Props) => {
               inputHead={"Assigned projects"}
               buttonText={"+"}
               options={projectsOptions}
+            />
+            <Typography
+              variant="subtitle1"
+              color="inherit"
+              noWrap
+              sx={{ marginTop: 1 }}
+            >
+              Stundent's availability hours:
+            </Typography>
+            <TextField
+              margin="normal"
+              fullWidth
+              id={inputHead + index + "hours"}
+              label={"Hours"}
+              value={student.availableHours}
+              onChange={(e) =>
+                updateHoursAtStudent(index, e.target.value as string)
+              }
             />
           </Box>
         );

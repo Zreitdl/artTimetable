@@ -1,7 +1,8 @@
 export interface Student {
   name: string;
   projects: string[];
-  restrictionHours: number[];
+  availableHours: string;
+  id: string;
 }
 
 export interface  AppDataModel {

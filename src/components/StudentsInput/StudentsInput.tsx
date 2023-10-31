@@ -1,8 +1,10 @@
-import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { memo, useEffect, useState } from "react";
-import AutocompleteTagsInput from "../AutocompleteTagsInput/AutocompleteTagsInput";
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
+
 import { Student } from "../../utils/appModels";
+import AutocompleteTagsInput from "../AutocompleteTagsInput/AutocompleteTagsInput";
 
 interface Props {
   inputHead: string;

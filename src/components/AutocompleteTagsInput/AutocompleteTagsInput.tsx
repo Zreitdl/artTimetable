@@ -1,7 +1,8 @@
-import { Box, Button, IconButton } from "@mui/material";
+import { memo, useEffect, useState } from "react";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import Autocomplete from "@mui/joy/Autocomplete";
-import { memo, useEffect, useState } from "react";
+import { Box, Button, IconButton } from "@mui/material";
 
 interface Props {
   inputHead: string;

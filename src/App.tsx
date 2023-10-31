@@ -1,11 +1,12 @@
-import './App.css';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import routes from "./config/routes";
-
-import "./global.module.scss";
 // import { getCurrentUserData } from "./utils/firebaseFunctions";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import routes from "./config/routes";
+
+import './App.css';
+import "./global.module.scss";
 
 function App() {
   return (

@@ -1,9 +1,11 @@
+import { useContext } from "react";
+
 import { Button, FormControl, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
-import TagsInput from "../TagsInput/TagsInput";
-import StudentsInput from "../StudentsInput/StudentsInput";
+
 import { AppContext, AppContextModel } from "../../utils/AppContext";
 import { Student } from "../../utils/appModels";
+import StudentsInput from "../StudentsInput/StudentsInput";
+import TagsInput from "../TagsInput/TagsInput";
 
 const MainForm = () => {
   const { appData, updateData } = useContext<AppContextModel>(AppContext);

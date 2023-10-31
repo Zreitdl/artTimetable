@@ -1,0 +1,50 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-react"],
+  "linterOptions": {
+    "exclude": ["node_modules/**"]
+  },
+  "jsRules": {},
+  "rules": {
+    "space-before-function-paren": false,
+    "array-type": false,
+    "curly": false,
+    "interface-over-type-literal": false,
+    "jsx-alignment": false,
+    "jsx-boolean-value": [true, "never"],
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "jsx-self-close": false,
+    "max-line-length": false,
+    "member-access": false,
+    "no-console": false,
+    "no-debugger": true,
+    "no-empty": false,
+    "no-shadowed-variable": false,
+    "no-unused-expression": false,
+    "no-var-requires": false,
+    "object-literal-sort-keys": false,
+    "only-arrow-functions": false,
+    "jsx-wrap-multiline": false,
+    "no-namespace": [true, "allow-declarations"],
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true,
+        "groups": [
+          "^react(-dom)?$",
+          "^((?!actions|actionTypes|assets|components|constants|contexts|interfaces|mocks|reducers|services|store|utils|\\.\\.?\\/)).*(?<!\\.s?css)$",
+          "^(actions|actionTypes|assets|components|constants|contexts|interfaces|mocks|reducers|services|store|utils)",
+          "^\\.\\.\\/.*(?<!\\.s?css)$",
+          "^\\.\\/.*(?<!\\.s?css)$",
+          "\\.s?css$"
+        ]
+      }
+    ],
+    "prefer-const": false,
+    "quotemark": false,
+    "semicolon": false,
+    "trailing-comma": false
+  },
+  "rulesDirectory": []
+}

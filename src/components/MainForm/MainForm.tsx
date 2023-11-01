@@ -1,14 +1,19 @@
-import { useContext } from "react";
+import { useContext, useMemo, useState } from "react";
 
-import { Button, FormControl, Typography } from "@mui/material";
+import { Button, FormControl, TextField, Typography } from "@mui/material";
 
 import { AppContext, AppContextModel } from "../../utils/AppContext";
 import { Student } from "../../utils/appModels";
 import StudentsInput from "../StudentsInput/StudentsInput";
 import TagsInput from "../TagsInput/TagsInput";
+import { findBestAssignment, generateTimetable, generateTimetableFromAppData } from "../../utils/generateTimetable";
 
 const MainForm = () => {
   const { appData, updateData } = useContext<AppContextModel>(AppContext);
+  const [ allAssignments, setAllAssignments ] = useState<any>();
+  const [ bestAssignment, setBestAssignment ] = useState<any>();
+  const [ bestWindowCount, setBestWindowCount ] = useState(0);
+  const [ showAssignments, setShowAssignments ] = useState(false);
 
   const updateProjectsData = (data: string[]) => {
     updateData({ ...appData, projects: data });
@@ -21,6 +26,18 @@ const MainForm = () => {
   const updateClassRoomsData = (data: string[]) => {
     updateData({ ...appData, classRooms: data });
   };
+
+  const updateTimeRange = (data: string) => {
+    updateData({ ...appData, timeRange: data });
+  };
+
+  const handleGenerateTimeTableClick = () => {
+    const [ assignments, best, bestWindow] = generateTimetableFromAppData(appData);
+    setAllAssignments(assignments);
+    setBestAssignment(best);
+    setBestWindowCount(bestWindow);
+    setShowAssignments(true);
+  }
 
   return (
     <>
@@ -59,10 +76,37 @@ const MainForm = () => {
         />
       </FormControl>
       <FormControl margin="normal" fullWidth>
+        <Typography variant="h5" color="inherit" noWrap>
+          Time range
+        </Typography>
+        <TextField
+          margin="normal"
+          sx={{ width: "300px" }}
+          label={'Time range'}
+          value={appData.timeRange || ""}
+          onChange={(e) => updateTimeRange(e.target.value)}
+        />
+      </FormControl>
+      <FormControl margin="normal" fullWidth>
         <Typography variant="h5" color="inherit" noWrap margin="0 0 10px 0">
           Generate timetable
         </Typography>
-        <Button variant="contained">Generate</Button>
+        <Button variant="contained" onClick={handleGenerateTimeTableClick}>Generate</Button>
+        <>
+        {showAssignments && (
+          <>
+          <h5>
+            Total amount of assignments: {allAssignments.length}
+          </h5>
+          <h5>
+            Best assignment: {JSON.stringify(bestAssignment)}
+          </h5>
+          <h5>
+            Best windows count at the best assignment: {bestWindowCount}
+          </h5>
+          </>
+        )}
+        </>
       </FormControl>
     </>
   );

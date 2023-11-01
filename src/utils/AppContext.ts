@@ -1,5 +1,7 @@
 import { createContext } from 'react';
 
+import { TIME_RANGE } from '../config/constants';
+
 import { AppDataModel } from './appModels';
 
 export interface AppContextModel {
@@ -7,4 +9,4 @@ export interface AppContextModel {
   updateData: (newData: AppDataModel) => void;
 }
 
-export const AppContext = createContext<AppContextModel>({appData: { students: [], projects: [], classRooms: []}, updateData: () => {}});
+export const AppContext = createContext<AppContextModel>({appData: { students: [], projects: [], classRooms: [], timeRange: TIME_RANGE.toString()}, updateData: () => {}});

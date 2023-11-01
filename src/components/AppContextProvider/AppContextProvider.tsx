@@ -10,7 +10,6 @@ function AppContextProvider({ children } : Props) {
   const [appData, setData] = useState<AppDataModel>(JSON.parse(localStorage.getItem("artTimeTableData") ?? '{"students": [], "projects": [], "classRooms": []}'));
 
   const updateData = (newData: AppDataModel) => {
-    console.log('update data', newData);
     localStorage.setItem("artTimeTableData", JSON.stringify(newData));
     setData(newData);
   };

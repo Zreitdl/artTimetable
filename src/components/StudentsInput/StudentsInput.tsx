@@ -4,7 +4,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import { uid } from "uid";
 
-import { TIME_RANGE } from "../../config/constants";
 import { Student } from "../../utils/appModels";
 import AutocompleteTagsInput from "../AutocompleteTagsInput/AutocompleteTagsInput";
 
@@ -45,7 +44,7 @@ const StudentsInput = memo((props: Props) => {
         {
           name: "",
           projects: [],
-          availableHours: TIME_RANGE.toString(),
+          restrictionsHours: "",
           id: uid(),
         },
       ];
@@ -77,7 +76,7 @@ const StudentsInput = memo((props: Props) => {
   const updateHoursAtStudent = (index: number, value: string) => {
     const newTags = students.map((student, i) => {
       if (i === index) {
-        student.availableHours = value;
+        student.restrictionsHours = value;
         return student;
       } else {
         return student;
@@ -140,14 +139,14 @@ const StudentsInput = memo((props: Props) => {
               noWrap
               sx={{ marginTop: 1 }}
             >
-              Stundent's availability hours:
+              Stundent's restrictions hours:
             </Typography>
             <TextField
               margin="normal"
               fullWidth
               id={inputHead + index + "hours"}
               label={"Hours"}
-              value={student.availableHours}
+              value={student.restrictionsHours}
               onChange={(e) =>
                 updateHoursAtStudent(index, e.target.value as string)
               }

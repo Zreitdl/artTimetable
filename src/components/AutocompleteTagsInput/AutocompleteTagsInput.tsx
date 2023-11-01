@@ -55,7 +55,7 @@ const AutocompleteTagsInput = memo((props: Props) => {
                 sx={{ width: 300 }}
                 onChange={(e, value) => updateTag(value as string, index)}
                 options={options}
-                value={value || options[0]}
+                value={value}
               />
               <IconButton
                 aria-label="delete"

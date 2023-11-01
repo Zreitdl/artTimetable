@@ -95,15 +95,22 @@ const MainForm = () => {
         <>
         {showAssignments && (
           <>
-          <h5>
+          <h3>
             Total amount of assignments: {allAssignments.length}
-          </h5>
-          <h5>
-            Best assignment: {JSON.stringify(bestAssignment)}
-          </h5>
-          <h5>
-            Best windows count at the best assignment: {bestWindowCount}
-          </h5>
+          </h3>
+          <h3>
+            Best assignment:  <br></br><br></br>
+            {bestAssignment.map((project: any) => {
+              return (
+              <div key={project.project}>
+                Project: {project.project} <br></br>
+                Room: {project.room}<br></br>
+                Time: {project.time}<br></br>
+                Students: {project.students.join(', ')}<br></br><br></br>
+              </div>
+              );
+            })}
+          </h3>
           </>
         )}
         </>

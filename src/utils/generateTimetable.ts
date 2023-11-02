@@ -39,12 +39,12 @@ export const generateTimetableFromAppData = (appData: AppDataModel) => {
   const students = appData.students.map((student) => {
     const studentRestrictions = !student.restrictionsHours
       ? []
-      : student.restrictionsHours.split(",").map((m) => +m);
+      : student.restrictionsHours.split(",").filter(f =>  !isNaN(parseInt(f, 10))).map((m) => +m);
     return { ...student, restrictions: studentRestrictions };
   });
   // console.log(students, "students");
 
-  const timeRange = appData.timeRange.split(",").map((m) => +m);
+  const timeRange = appData.timeRange.split(",").filter(f =>  !isNaN(parseInt(f, 10))).map((m) => +m);
   // console.log("timerange", timeRange);
 
   const projects = appData.projects.map((project) => {

@@ -21,7 +21,7 @@ const StudentsInput = memo((props: Props) => {
   const [students, setStudents] = useState<Student[]>(initialValues);
 
   useEffect(() => {
-    console.log("update students");
+    // console.log("update students");
     updateData(students);
   }, [students]);
 
@@ -93,7 +93,7 @@ const StudentsInput = memo((props: Props) => {
             sx={{
               padding: 2,
               my: 2,
-              "&:nth-child(2n)": { backgroundColor: "#e1f5fe52", border: '1px solid #81d4fa', borderRadius: 2 },
+              "&:nth-of-type(2n)": { backgroundColor: "#e1f5fe52", border: '1px solid #81d4fa', borderRadius: 2 },
             }}
             key={"student__" + student.id}
           >

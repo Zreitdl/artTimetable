@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { LegacyRef, useContext, useRef, useState } from "react";
 
 import { Button, FormControl, TextField, Typography } from "@mui/material";
 
@@ -10,12 +10,16 @@ import {
 } from "../../utils/generateTimetable";
 import StudentsInput from "../StudentsInput/StudentsInput";
 import TagsInput from "../TagsInput/TagsInput";
+import { ITimetableProps, Timetable } from "../Timetable/Timetable";
 
 const MainForm = () => {
   const { appData, updateData } = useContext<AppContextModel>(AppContext);
-  const [allAssignments, setAllAssignments] = useState<any>();
-  const [bestAssignment, setBestAssignment] = useState<any>();
+  const [allAssignmentsNumber, setAllAssignmentsNumber] = useState<number>();
+  const [bestAssignment, setBestAssignment] = useState<
+    ProjectAssignment[] | null
+  >();
   const [showAssignments, setShowAssignments] = useState(false);
+  const [tableProps, setTableProps] = useState<ITimetableProps>();
   const [randomAssignment, setRandomAssignment] =
     useState<ProjectAssignment[]>();
 
@@ -35,13 +39,26 @@ const MainForm = () => {
     updateData({ ...appData, timeRange: data });
   };
 
+  const scrollToTable = () => {
+    setTimeout(() => {
+      document.getElementById("artTimeTable")?.scrollIntoView();
+    }, 0);
+  };
+
   const handleGenerateTimeTableClick = () => {
-    const { assignments, bestAssignment, randomAssignment } =
+    const { allAssignmentsNumber, bestAssignment, randomAssignment } =
       generateTimetableFromAppData(appData);
-    setAllAssignments(assignments);
+    setAllAssignmentsNumber(allAssignmentsNumber);
     setBestAssignment(bestAssignment);
     setRandomAssignment(randomAssignment);
+    console.log(appData.timeRange);
+    setTableProps({
+      projectAssignments: bestAssignment || randomAssignment,
+      rooms: [...appData.classRooms],
+      timeRange: appData.timeRange,
+    });
     setShowAssignments(true);
+    scrollToTable();
   };
 
   return (
@@ -101,49 +118,33 @@ const MainForm = () => {
         </Button>
         <>
           {showAssignments && (
-            <>
-              <h3>Total amount of assignments: {allAssignments.length}</h3>
+            <div id="artTimeTable">
+              <Typography
+                sx={{ textAlign: "center" }}
+                variant="h6"
+                m={2}
+                color="primary"
+              >
+                Total amount of assignments: {allAssignmentsNumber}
+              </Typography>
               {!bestAssignment && randomAssignment && (
-                <h3>
-                  Random assignment: <br></br>
-                  <br></br>
-                  {randomAssignment.map((project: any) => {
-                    return (
-                      <div key={project.project}>
-                        Project: {project.project} <br></br>
-                        Room: {project.room}
-                        <br></br>
-                        Time: {project.time}
-                        <br></br>
-                        Students: {project.students.join(", ")}
-                        <br></br>
-                        <br></br>
-                      </div>
-                    );
-                  })}
-                </h3>
+                <Typography
+                  sx={{ textAlign: "center" }}
+                  variant="h6"
+                  m={2}
+                  color="secondary"
+                >
+                  Assignment is impossible, showing uncomplete assignment:
+                </Typography>
               )}
-              {bestAssignment && (
-                <h3>
-                  Best assignment: <br></br>
-                  <br></br>
-                  {bestAssignment.map((project: any) => {
-                    return (
-                      <div key={project.project}>
-                        Project: {project.project} <br></br>
-                        Room: {project.room}
-                        <br></br>
-                        Time: {project.time}
-                        <br></br>
-                        Students: {project.students.join(", ")}
-                        <br></br>
-                        <br></br>
-                      </div>
-                    );
-                  })}
-                </h3>
+              {(bestAssignment || randomAssignment) && tableProps && (
+                <Timetable
+                  projectAssignments={tableProps.projectAssignments}
+                  rooms={tableProps.rooms}
+                  timeRange={tableProps.timeRange}
+                />
               )}
-            </>
+            </div>
           )}
         </>
       </FormControl>

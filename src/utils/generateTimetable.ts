@@ -62,7 +62,8 @@ export const generateTimetableFromAppData = (appData: AppDataModel) => {
   let randomAssignment: ProjectAssignment[] = [];
   distributeProjects(0, []);
   const { bestAssignment, bestWindowCount } = findBestAssignment(assignments);
-  return { assignments, bestAssignment, bestWindowCount, randomAssignment };
+  const allAssignmentsNumber = assignments.length;
+  return { allAssignmentsNumber, bestAssignment, bestWindowCount, randomAssignment };
 
   function distributeProjects(
     currentProjectIndex: number,
